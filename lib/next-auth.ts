@@ -23,6 +23,7 @@ export const authOptions: NextAuthOptions = {
           const user = await getUserByEmail(session.user.email!);
           const data = {
             id: user?.id,
+            name: user?.name,
             createdAt: user?.createdAt,
             updatedAt: user?.updatedAt,
           };

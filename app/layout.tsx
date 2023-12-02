@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Comfortaa } from 'next/font/google';
 import './globals.css';
-import AuthProvider from '@/context/AuthContext';
 import { Navbar } from '@/components';
+import { AuthProvider, ToasterProvider } from '@/context';
 
-const inter = Inter({ subsets: ['latin'] });
+const comfortaa = Comfortaa({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Sleep Buddy',
@@ -18,8 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={comfortaa.className}>
         <AuthProvider>
+          <ToasterProvider />
           <Navbar />
           {children}
         </AuthProvider>

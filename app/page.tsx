@@ -1,10 +1,11 @@
-import { SessionData } from '@/components';
+import { ClientApiData, SessionData } from '@/components';
 
 const Home = () => {
   return (
     <div>
       Home
       <SessionData />
+      <ClientApiData />
     </div>
   );
 };

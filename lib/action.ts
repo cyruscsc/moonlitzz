@@ -30,5 +30,3 @@ export const updateSleep = (id: string, data: SleepUpdateInput) =>
 
 export const deleteSleep = (id: string) =>
   prisma.sleep.delete({ where: { id } });
-
-import { NextApiRequest } from 'next';

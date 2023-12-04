@@ -1,12 +1,13 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { FormEvent, useEffect, useState } from 'react';
-import { Button } from '.';
+import { FormEvent, use, useEffect, useState } from 'react';
+import { Button, Form, Input } from './basic';
 import { UserResponseData } from '@/types/api.types';
 import toast from 'react-hot-toast';
+import { formChangeHandler } from '@/utils/handler';
 
-interface ProfileFormProps {
+interface ProfileFormDataProps {
   email: string;
   name: string;
 }
@@ -16,7 +17,7 @@ const ProfileForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     name: '',
-  } as ProfileFormProps);
+  } as ProfileFormDataProps);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,62 +26,70 @@ const ProfileForm = () => {
       name: session?.user?.name || '',
     });
   }, [session]);
-
-  const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setFormData({ ...formData, [name]: value });
-  };
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const res = await fetch('/api/user', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-    const data = (await res.json()) as UserResponseData;
-    switch (data.status) {
-      case 200:
-        update({ name: formData.name });
-        toast.success('User updated successfully!');
-        break;
-      case 401:
-        toast.error('Unauthorized user!');
-        break;
-      case 404:
-        toast.error('User not found!');
-        break;
-      case 500:
-        toast.error('Internal server error! ' + data.error);
-        break;
-      default:
-        toast.error('Something went wrong!');
-        break;
+    try {
+      const res = await fetch('/api/user', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data: UserResponseData = await res.json();
+      switch (data.status) {
+        case 200:
+          update({ name: formData.name });
+          toast.success('User updated successfully!');
+          break;
+        case 401:
+          toast.error('Unauthorized user!');
+          break;
+        case 404:
+          toast.error('User not found!');
+          break;
+        case 500:
+          toast.error('Internal server error! ' + data.error);
+          break;
+        default:
+          toast.error('Something went wrong!');
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Cannot update user!');
     }
     setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type='text'
-        placeholder='Email'
+    <Form handleSubmit={handleSubmit}>
+      <Input
+        type='email'
+        id='email'
         name='email'
         value={formData.email}
-        disabled
+        placeholder='Email'
+        disabled={true}
+        label='Email'
+        handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
-      <input
+      <Input
         type='text'
-        placeholder='Name'
+        id='name'
         name='name'
         value={formData.name}
-        onChange={handleChange}
+        placeholder='Name'
+        label='Name'
+        handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
-      <Button type='submit' loading={loading}>
+      <Button type='submit' disabled={loading}>
         {loading ? 'Updating' : 'Update'}
       </Button>
-    </form>
+    </Form>
   );
 };
 

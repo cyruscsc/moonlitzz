@@ -6,13 +6,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const session = (await getServerSession({ req, ...authOptions })) as
-      | (Session & { user: SessionUser })
-      | null;
+    const session: (Session & { user: SessionUser }) | null =
+      await getServerSession({ req, ...authOptions });
     if (!session) {
       return NextResponse.json({ status: 401 });
     }
-    const user = await getUserById(session?.user?.id);
+    const user = await getUserById(session.user.id);
     if (!user) {
       return NextResponse.json({ status: 404 });
     }
@@ -24,13 +23,12 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = (await getServerSession({ req, ...authOptions })) as
-      | (Session & { user: SessionUser })
-      | null;
+    const session: (Session & { user: SessionUser }) | null =
+      await getServerSession({ req, ...authOptions });
     if (!session) {
       return NextResponse.json({ status: 401 });
     }
-    const user = await getUserById(session?.user?.id);
+    const user = await getUserById(session.user.id);
     if (!user) {
       return NextResponse.json({ status: 404 });
     }
@@ -47,13 +45,12 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const session = (await getServerSession({ req, ...authOptions })) as
-      | (Session & { user: SessionUser })
-      | null;
+    const session: (Session & { user: SessionUser }) | null =
+      await getServerSession({ req, ...authOptions });
     if (!session) {
       return NextResponse.json({ status: 401 });
     }
-    const user = await getUserById(session?.user?.id);
+    const user = await getUserById(session.user.id);
     if (!user) {
       return NextResponse.json({ status: 404 });
     }

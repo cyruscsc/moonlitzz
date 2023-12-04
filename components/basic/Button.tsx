@@ -7,8 +7,8 @@ interface ButtonProps {
   children?: ReactNode;
   bgColor?: string;
   textColor?: string;
-  loading?: boolean;
-  handleClick?: MouseEventHandler;
+  disabled?: boolean;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
@@ -16,13 +16,13 @@ const Button = ({
   children,
   bgColor,
   textColor,
-  loading,
+  disabled,
   handleClick,
 }: ButtonProps) => {
   return (
     <button
       type={type || 'button'}
-      disabled={loading || false}
+      disabled={disabled || false}
       onClick={handleClick}
       className={`${bgColor ? bgColor : ''} ${textColor ? textColor : ''}`}
     >

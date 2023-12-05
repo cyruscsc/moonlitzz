@@ -1,11 +1,12 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { FormEvent, use, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Button, Form, Input } from './basic';
 import { UserResponseData } from '@/types/api.types';
 import toast from 'react-hot-toast';
 import { formChangeHandler } from '@/utils/handler';
+import { endpoints } from '@/constants';
 
 interface ProfileFormDataProps {
   email: string;
@@ -26,15 +27,12 @@ const ProfileForm = () => {
       name: session?.user?.name || '',
     });
   }, [session]);
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch('/api/user', {
+      const res = await fetch(endpoints.user.update, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

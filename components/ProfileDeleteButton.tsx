@@ -5,6 +5,7 @@ import { Button } from './basic';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
+import { endpoints } from '@/constants';
 
 const ProfileDeleteButton = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ const ProfileDeleteButton = () => {
 
   const handleClick = async () => {
     setLoading(true);
-    const res = await fetch('/api/user', {
+    const res = await fetch(endpoints.user.delete, {
       method: 'DELETE',
     });
     const data = await res.json();
@@ -41,7 +42,7 @@ const ProfileDeleteButton = () => {
     setLoading(false);
   };
   return (
-    <Button type='button' loading={loading} handleClick={handleClick}>
+    <Button type='button' disabled={loading} handleClick={handleClick}>
       {loading ? 'Deleting...' : 'Delete Account'}
     </Button>
   );

@@ -1,14 +1,18 @@
 import { Sleep, User } from '@prisma/client';
 
-export interface UserResponseData {
+export interface BasicResponseData {
   status: number;
-  user?: User;
   error?: string;
 }
 
-export interface SleepResponseData {
-  status: number;
+export interface UserResponseData extends BasicResponseData {
+  user?: User;
+}
+
+export interface SleepResponseData extends BasicResponseData {
   sleep?: Sleep;
+}
+
+export interface SleepsResponseData extends BasicResponseData {
   sleeps?: Sleep[];
-  error?: string;
 }

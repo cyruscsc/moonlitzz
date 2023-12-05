@@ -1,15 +1,14 @@
 'use client';
 
+import { endpoints } from '@/constants';
 import { useEffect, useState } from 'react';
-
-const END_POINT = '/api/user';
 
 const ClientApiData = () => {
   const [data, setData] = useState('');
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch(END_POINT);
+      const res = await fetch(endpoints.user.get);
       const data = await res.json();
       setData(JSON.stringify(data));
     };

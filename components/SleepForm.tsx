@@ -2,12 +2,11 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input } from './basic';
-import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { Sleep } from '@prisma/client';
 import { formChangeHandler } from '@/utils/handler';
-import { endpoints } from '@/constants/endpoints';
 import { SleepResponseData } from '@/types/api.types';
+import { endpoints } from '@/constants';
 
 interface SleepFormProps {
   type: 'create' | 'update';
@@ -24,7 +23,6 @@ interface SleepFormDataProps {
 }
 
 const SleepForm = ({ type, sleepId }: SleepFormProps) => {
-  const { data: session } = useSession();
   const [formData, setFormData] = useState({
     start: '',
     end: '',
@@ -38,7 +36,7 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
   useEffect(() => {
     const getSleep = async () => {
       setLoading(true);
-      const res = await fetch(`/api/sleep/${sleepId}`, {
+      const res = await fetch(`${endpoints.sleep.getOne}/${sleepId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -58,10 +56,6 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
       toast.error('Cannot get sleep data!');
     }
   }, []);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

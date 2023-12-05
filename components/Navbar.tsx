@@ -1,3 +1,4 @@
+import { routes } from '@/constants';
 import Link from 'next/link';
 
 const Navbar = () => {
@@ -5,10 +6,16 @@ const Navbar = () => {
     <nav>
       <ul>
         <li>
-          <Link href='/'>Home</Link>
+          <Link href={routes.home}>- Home</Link>
         </li>
         <li>
-          <Link href='/profile'>Profile</Link>
+          <Link href={routes.profile}>- Profile</Link>
+        </li>
+        <li>
+          <Link href={routes.records}>- Records</Link>
+        </li>
+        <li>
+          <Link href={routes.createSleep}>- Create Sleep</Link>
         </li>
       </ul>
     </nav>

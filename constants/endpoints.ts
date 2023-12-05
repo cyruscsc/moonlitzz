@@ -1,4 +1,4 @@
-export const endpoints = {
+const endpoints = {
   user: {
     get: '/api/user',
     update: '/api/user',
@@ -12,3 +12,5 @@ export const endpoints = {
     delete: '/api/sleep',
   },
 };
+
+export default endpoints;

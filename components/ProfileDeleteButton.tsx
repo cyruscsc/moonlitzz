@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { endpoints } from '@/constants';
+import { UserResponseData } from '@/types/api.types';
 
 const ProfileDeleteButton = () => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const ProfileDeleteButton = () => {
     const res = await fetch(endpoints.user.delete, {
       method: 'DELETE',
     });
-    const data = await res.json();
+    const data: UserResponseData = await res.json();
     switch (data.status) {
       case 200:
         const signOutData = await signOut({
@@ -24,16 +25,16 @@ const ProfileDeleteButton = () => {
           callbackUrl: '/',
         });
         router.push(signOutData.url);
-        toast.success('User deleted successfully!');
+        data.message && toast.success(data.message);
         break;
       case 401:
-        toast.error('Unauthorized user!');
+        data.error && toast.error(data.error);
         break;
       case 404:
-        toast.error('User not found!');
+        data.error && toast.error(data.error);
         break;
       case 500:
-        toast.error('Internal server error! ' + data.error);
+        data.error && toast.error(data.error);
         break;
       default:
         toast.error('Something went wrong!');

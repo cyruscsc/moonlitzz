@@ -35,7 +35,12 @@ const Records = () => {
     <div>
       <h1>Records</h1>
       {sleeps.map((sleep) => (
-        <SleepCard key={sleep.id} sleep={sleep} />
+        <SleepCard
+          key={sleep.id}
+          sleep={sleep}
+          sleeps={sleeps}
+          setSleeps={setSleeps}
+        />
       ))}
     </div>
   );

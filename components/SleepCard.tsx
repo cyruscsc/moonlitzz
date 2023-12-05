@@ -2,12 +2,16 @@ import { Sleep } from '@prisma/client';
 import { Button, Card } from './basic';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/constants';
+import { SleepDeleteButton } from '.';
+import { Dispatch } from 'react';
 
 interface SleepCardProps {
   sleep: Sleep;
+  sleeps: Sleep[];
+  setSleeps: Dispatch<React.SetStateAction<Sleep[]>>;
 }
 
-const SleepCard = ({ sleep }: SleepCardProps) => {
+const SleepCard = ({ sleep, sleeps, setSleeps }: SleepCardProps) => {
   const router = useRouter();
   return (
     <Card>
@@ -24,6 +28,7 @@ const SleepCard = ({ sleep }: SleepCardProps) => {
       >
         Edit
       </Button>
+      <SleepDeleteButton id={sleep.id} sleeps={sleeps} setSleeps={setSleeps} />
     </Card>
   );
 };

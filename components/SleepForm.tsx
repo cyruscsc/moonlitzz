@@ -5,7 +5,8 @@ import { Button, Checkbox, Form, Input } from './basic';
 import toast from 'react-hot-toast';
 import { formChangeHandler, formSubmitHandler } from '@/utils/handler';
 import { SleepResponseData } from '@/types/api.types';
-import { endpoints } from '@/constants';
+import { endpoints, routes } from '@/constants';
+import { useRouter } from 'next/navigation';
 
 interface SleepFormProps {
   type: 'create' | 'edit';
@@ -22,6 +23,7 @@ interface SleepFormDataProps {
 }
 
 const SleepForm = ({ type, sleepId }: SleepFormProps) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     start: '',
     end: '',
@@ -70,6 +72,10 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
           method: type === 'create' ? 'POST' : 'PUT',
           formData,
           setLoading,
+          handleStatus: {
+            200: () => router.push(routes.records),
+            201: () => router.push(routes.records),
+          },
         })
       }
     >

@@ -2,6 +2,7 @@ import { Sleep, User } from '@prisma/client';
 
 export interface BasicResponseData {
   status: number;
+  message?: string;
   error?: string;
 }
 

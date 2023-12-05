@@ -1,11 +1,14 @@
 import { Sleep } from '@prisma/client';
-import { Card } from './basic';
+import { Button, Card } from './basic';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/constants';
 
 interface SleepCardProps {
   sleep: Sleep;
 }
 
 const SleepCard = ({ sleep }: SleepCardProps) => {
+  const router = useRouter();
   return (
     <Card>
       <h2>
@@ -16,6 +19,11 @@ const SleepCard = ({ sleep }: SleepCardProps) => {
       <p>Wake-up: {sleep.wakeUp ? 'yes' : 'no'}</p>
       <p>Sweat: {sleep.sweat ? 'yes' : 'no'}</p>
       <p>Note: {sleep.note && sleep.note}</p>
+      <Button
+        handleClick={() => router.push(`${routes.editSleep}/${sleep.id}`)}
+      >
+        Edit
+      </Button>
     </Card>
   );
 };

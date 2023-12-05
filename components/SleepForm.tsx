@@ -1,15 +1,14 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input } from './basic';
 import toast from 'react-hot-toast';
-import { Sleep } from '@prisma/client';
-import { formChangeHandler } from '@/utils/handler';
+import { formChangeHandler, formSubmitHandler } from '@/utils/handler';
 import { SleepResponseData } from '@/types/api.types';
 import { endpoints } from '@/constants';
 
 interface SleepFormProps {
-  type: 'create' | 'update';
+  type: 'create' | 'edit';
   sleepId?: string;
 }
 
@@ -42,14 +41,16 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
           'Content-Type': 'application/json',
         },
       });
-      const data: Sleep = await res.json();
-      const { start, end, nightmare, wakeUp, sweat, note } = data;
-      setFormData({ start, end, nightmare, wakeUp, sweat, note });
+      const data: SleepResponseData = await res.json();
+      if (data.sleep) {
+        const { start, end, nightmare, wakeUp, sweat, note } = data.sleep;
+        setFormData({ start, end, nightmare, wakeUp, sweat, note });
+      }
       setLoading(false);
     };
     try {
       {
-        type === 'update' && getSleep();
+        type === 'edit' && getSleep();
       }
     } catch (error) {
       console.log(error);
@@ -57,39 +58,21 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
     }
   }, []);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await fetch(endpoints.sleep.create, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const data: SleepResponseData = await res.json();
-      switch (data.status) {
-        case 201:
-          toast.success('Sleep created successfully!');
-          break;
-        case 401:
-          toast.error('Unauthorized user!');
-          break;
-        case 500:
-          toast.error('Internal server error! ' + data.error);
-          break;
-        default:
-          toast.error('Something went wrong!');
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('Cannot create sleep!');
-    }
-    setLoading(false);
-  };
-
   return (
-    <Form handleSubmit={handleSubmit}>
+    <Form
+      handleSubmit={(e) =>
+        formSubmitHandler({
+          e,
+          endpoint:
+            type === 'create'
+              ? endpoints.sleep.create
+              : `${endpoints.sleep.update}/${sleepId}`,
+          method: type === 'create' ? 'POST' : 'PUT',
+          formData,
+          setLoading,
+        })
+      }
+    >
       <Input
         type='datetime-local'
         id='start'
@@ -141,7 +124,7 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
       />
       <Button type='submit' disabled={loading}>
         {type === 'create' && (loading ? 'Creating' : 'Create')}
-        {type === 'update' && (loading ? 'Updating' : 'Update')}
+        {type === 'edit' && (loading ? 'Updating' : 'Update')}
       </Button>
     </Form>
   );

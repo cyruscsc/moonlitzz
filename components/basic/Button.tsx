@@ -5,8 +5,7 @@ import { MouseEventHandler, ReactNode } from 'react';
 interface ButtonProps {
   type?: 'button' | 'submit';
   children?: ReactNode;
-  bgColor?: string;
-  textColor?: string;
+  style?: 'default' | 'warning';
   disabled?: boolean;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -14,8 +13,7 @@ interface ButtonProps {
 const Button = ({
   type,
   children,
-  bgColor,
-  textColor,
+  style,
   disabled,
   handleClick,
 }: ButtonProps) => {
@@ -24,7 +22,9 @@ const Button = ({
       type={type || 'button'}
       disabled={disabled || false}
       onClick={handleClick}
-      className={`${bgColor ? bgColor : ''} ${textColor ? textColor : ''}`}
+      className={`btn ${style === 'warning' ? 'btn-accent' : 'btn-secondary'} ${
+        disabled ? 'btn-disabled' : ''
+      }`}
     >
       {children}
     </button>

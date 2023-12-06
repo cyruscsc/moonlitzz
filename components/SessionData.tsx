@@ -7,7 +7,7 @@ const SessionData = async () => {
   return (
     <div>
       <AuthButton provider='google'>{session ? 'Logout' : 'Login'}</AuthButton>
-      <pre>{JSON.stringify(session)}</pre>
+      <pre>{JSON.stringify(session?.user?.name)}</pre>
     </div>
   );
 };

@@ -10,16 +10,11 @@ const config: Config = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      jungle: {
-        DEFAULT: '#132E35',
-        dark: '#0D1F23',
-      },
-      slate: {
-        DEFAULT: '#69818D',
-        dark: '#2D4A53',
-      },
-      silver: '#AFB3B7',
-      coral: '#5A636A',
+      eigengrau: '#17161B',
+      anthracite: '#28272C',
+      posie: '#BFBEE3',
+      portage: '#9092DA',
+      errigal: '#F1F1F3',
     },
     extend: {
       backgroundImage: {
@@ -29,6 +24,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: ['night'],
+  },
 };
 export default config;

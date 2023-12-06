@@ -1,18 +1,30 @@
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
+import { Button } from '.';
 
 interface CardProps {
+  title?: string;
   children?: ReactNode;
-  bgColor?: string;
-  textColor?: string;
+  button?: {
+    label?: string;
+    handleClick?: MouseEventHandler<HTMLButtonElement>;
+  };
 }
 
-const Card = ({ children, bgColor, textColor }: CardProps) => {
+const Card = ({ title, children, button }: CardProps) => {
   return (
-    <article
-      className={`${bgColor ? bgColor : ''} ${textColor ? textColor : ''}`}
-    >
-      {children}
-    </article>
+    <div className='card w-96 bg-neutral text-neutral-content'>
+      <div className='card-body'>
+        {title && <h2 className='card-title'>{title}</h2>}
+        {children}
+        {button && (
+          <div className='card-actions justify-end'>
+            <Button style='default' handleClick={button.handleClick}>
+              {button.label}
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -10,7 +10,7 @@ const ClientApiData = () => {
     const getData = async () => {
       const res = await fetch(endpoints.user.get);
       const data = await res.json();
-      setData(JSON.stringify(data));
+      setData(JSON.stringify(data.user.name));
     };
     getData();
   }, []);

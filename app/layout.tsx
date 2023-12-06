@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Comfortaa } from 'next/font/google';
 import './globals.css';
-import { Navbar } from '@/components';
+import { BottomNav, Navbar } from '@/components';
 import { AuthProvider, ToasterProvider } from '@/context';
 
 const comfortaa = Comfortaa({ subsets: ['latin'] });
@@ -20,9 +20,12 @@ export default function RootLayout({
     <html lang='en'>
       <body className={comfortaa.className}>
         <AuthProvider>
-          <ToasterProvider />
-          <Navbar />
-          {children}
+          <div className='max-w-5xl mx-auto'>
+            <ToasterProvider />
+            <Navbar />
+            {children}
+            <BottomNav />
+          </div>
         </AuthProvider>
       </body>
     </html>

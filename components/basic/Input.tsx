@@ -4,7 +4,6 @@ import { ChangeEventHandler } from 'react';
 
 interface InputProps {
   type?: 'text' | 'email' | 'datetime-local';
-  id?: string;
   name?: string;
   value?: string | null;
   min?: string | number;
@@ -18,7 +17,6 @@ interface InputProps {
 
 const Input = ({
   type,
-  id,
   name,
   value,
   min,
@@ -30,21 +28,23 @@ const Input = ({
   handleChange,
 }: InputProps) => {
   return (
-    <div>
-      {id && label && <label htmlFor={id}>{label}</label>}
+    <label className='form-control w-full max-w-xs'>
+      <div className='label'>
+        <span className='label-text'>{label}</span>
+      </div>
       <input
         type={type || 'text'}
-        id={id}
         name={name}
-        value={value || undefined}
+        value={value || ''}
         min={min}
         max={max}
         placeholder={placeholder}
         required={required || false}
         disabled={disabled || false}
         onChange={handleChange}
+        className='input input-bordered input-sm w-full max-w-xs'
       />
-    </div>
+    </label>
   );
 };
 

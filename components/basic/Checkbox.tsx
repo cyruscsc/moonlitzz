@@ -3,7 +3,6 @@
 import { ChangeEventHandler } from 'react';
 
 interface CheckboxProps {
-  id?: string;
   name?: string;
   checked?: boolean;
   required?: boolean;
@@ -13,7 +12,6 @@ interface CheckboxProps {
 }
 
 const Checkbox = ({
-  id,
   name,
   checked,
   required,
@@ -22,17 +20,19 @@ const Checkbox = ({
   handleChange,
 }: CheckboxProps) => {
   return (
-    <div>
-      {id && label && <label htmlFor={id}>{label}</label>}
-      <input
-        type='checkbox'
-        id={id}
-        name={name}
-        checked={checked || false}
-        required={required || false}
-        disabled={disabled || false}
-        onChange={handleChange}
-      />
+    <div className='form-control w-full max-w-xs'>
+      <label className='label cursor-pointer'>
+        <span className='label-text'>{label}</span>
+        <input
+          type='checkbox'
+          name={name}
+          checked={checked || false}
+          required={required || false}
+          disabled={disabled || false}
+          onChange={handleChange}
+          className='checkbox'
+        />
+      </label>
     </div>
   );
 };

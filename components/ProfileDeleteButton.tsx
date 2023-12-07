@@ -43,7 +43,12 @@ const ProfileDeleteButton = () => {
     setLoading(false);
   };
   return (
-    <Button type='button' disabled={loading} handleClick={handleClick}>
+    <Button
+      type='button'
+      style='warning'
+      disabled={loading}
+      handleClick={handleClick}
+    >
       {loading ? 'Deleting...' : 'Delete Account'}
     </Button>
   );

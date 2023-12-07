@@ -37,32 +37,44 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
   } as SleepFormDataProps);
   const [loading, setLoading] = useState(false);
 
+  const getSleep = async () => {
+    setLoading(true);
+    const res = await fetch(`${endpoints.sleep.getOne}/${sleepId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data: SleepResponseData = await res.json();
+    if (data.sleep) {
+      const { start, end, duration, nightmare, wakeUp, sweat, note } =
+        data.sleep;
+      setFormData({ start, end, duration, nightmare, wakeUp, sweat, note });
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const getSleep = async () => {
-      setLoading(true);
-      const res = await fetch(`${endpoints.sleep.getOne}/${sleepId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data: SleepResponseData = await res.json();
-      if (data.sleep) {
-        const { start, end, duration, nightmare, wakeUp, sweat, note } =
-          data.sleep;
-        setFormData({ start, end, duration, nightmare, wakeUp, sweat, note });
-      }
-      setLoading(false);
-    };
     try {
       {
-        type === 'edit' && getSleep();
+        type === 'edit' && sleepId && getSleep();
       }
     } catch (error) {
       console.log(error);
       toast.error('Cannot get sleep data!');
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      {
+        type === 'edit' && sleepId && getSleep();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Cannot get sleep data!');
+    }
+  }, [sleepId]);
 
   useEffect(() => {
     if (formData.start && formData.end) {
@@ -144,10 +156,12 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
         label='Note'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
-      <Button type='submit' disabled={loading}>
-        {type === 'create' && (loading ? 'Creating' : 'Create')}
-        {type === 'edit' && (loading ? 'Updating' : 'Update')}
-      </Button>
+      <div className='flex justify-end mt-3'>
+        <Button type='submit' disabled={loading}>
+          {type === 'create' && (loading ? 'Creating' : 'Create')}
+          {type === 'edit' && (loading ? 'Updating' : 'Update')}
+        </Button>
+      </div>
     </Form>
   );
 };

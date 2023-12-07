@@ -20,7 +20,7 @@ const Checkbox = ({
   handleChange,
 }: CheckboxProps) => {
   return (
-    <div className='form-control w-full max-w-xs'>
+    <div className='form-control w-full'>
       <label className='label cursor-pointer'>
         <span className='label-text'>{label}</span>
         <input

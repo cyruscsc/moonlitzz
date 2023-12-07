@@ -7,23 +7,15 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 interface AuthButtonProps {
   provider: BuiltInProviderType;
   children?: ReactNode;
-  bgColor?: string;
-  textColor?: string;
 }
 
-const AuthButton = ({
-  provider,
-  children,
-  bgColor,
-  textColor,
-}: AuthButtonProps) => {
+const AuthButton = ({ provider, children }: AuthButtonProps) => {
   const { data: session, status } = useSession();
   return (
     <button
       type='button'
       disabled={status === 'loading'}
       onClick={() => (session ? signOut() : signIn(provider))}
-      className={`${bgColor ? bgColor : ''} ${textColor ? textColor : ''}`}
     >
       {children}
     </button>

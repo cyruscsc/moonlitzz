@@ -10,7 +10,11 @@ interface FormProps {
 
 const Form = ({ id, children, handleSubmit }: FormProps) => {
   return (
-    <form id={id} onSubmit={handleSubmit}>
+    <form
+      id={id}
+      onSubmit={handleSubmit}
+      className='flex flex-col justify-center gap-2'
+    >
       {children}
     </form>
   );

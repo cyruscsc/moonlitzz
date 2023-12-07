@@ -28,7 +28,7 @@ const Input = ({
   handleChange,
 }: InputProps) => {
   return (
-    <label className='form-control w-full max-w-xs'>
+    <label className='form-control w-full'>
       <div className='label'>
         <span className='label-text'>{label}</span>
       </div>
@@ -42,7 +42,7 @@ const Input = ({
         required={required || false}
         disabled={disabled || false}
         onChange={handleChange}
-        className='input input-bordered input-sm w-full max-w-xs'
+        className='input input-bordered input-sm w-full'
       />
     </label>
   );

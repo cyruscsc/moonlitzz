@@ -2,9 +2,10 @@
 
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { Button, Form, Input } from './basic';
+import { Button, Form, Input, Loading } from './basic';
 import { formChangeHandler, formSubmitHandler } from '@/utils/handler';
 import { endpoints } from '@/constants';
+import { ProfileDeleteButton } from '.';
 
 interface ProfileFormDataProps {
   email: string;
@@ -58,9 +59,12 @@ const ProfileForm = () => {
         label='Name'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
-      <Button type='submit' disabled={loading}>
-        {loading ? 'Updating' : 'Update'}
-      </Button>
+      <div className='flex justify-end gap-3 mt-3'>
+        <Button type='submit' disabled={loading}>
+          {loading ? <Loading /> : 'Update'}
+        </Button>
+        <ProfileDeleteButton />
+      </div>
     </Form>
   );
 };

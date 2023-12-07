@@ -97,3 +97,8 @@ export const formSubmitHandler = async ({
   }
   setLoading && setLoading(false);
 };
+
+export const modalOpenHandler = (forId: string): void => {
+  const dialog = document.getElementById(forId) as HTMLDialogElement;
+  dialog.showModal();
+};

@@ -1,10 +1,10 @@
 export interface ParsedDate {
   date: Date;
-  year: number;
+  year: string;
   month: string;
-  day: number;
-  hour: number;
-  minute: number;
+  day: string;
+  hour: string;
+  minute: string;
 }
 
 export interface DateLength {
@@ -29,15 +29,19 @@ class TimeKeeper {
     'Dec',
   ];
 
+  private static padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
+  }
+
   static parseDate(dateString: string): ParsedDate {
     const date = new Date(dateString);
     return {
       date,
-      year: date.getFullYear(),
+      year: `${date.getFullYear()}`,
       month: this.monthNames[date.getMonth()],
-      day: date.getDate(),
-      hour: date.getHours(),
-      minute: date.getMinutes(),
+      day: this.padZero(date.getDate()),
+      hour: this.padZero(date.getHours()),
+      minute: this.padZero(date.getMinutes()),
     };
   }
 
@@ -69,11 +73,11 @@ class TimeKeeper {
     const minute = Math.floor((lengthInSec % 3600) / 60);
     return {
       date: new Date(lengthInSec * 1000),
-      year: 0,
+      year: '',
       month: '',
-      day: 0,
-      hour,
-      minute,
+      day: '',
+      hour: this.padZero(hour),
+      minute: this.padZero(minute),
     };
   }
 }

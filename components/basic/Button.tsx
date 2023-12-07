@@ -8,6 +8,7 @@ interface ButtonProps {
   style?: 'default' | 'warning';
   disabled?: boolean;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 }
 
 const Button = ({
@@ -16,6 +17,7 @@ const Button = ({
   style,
   disabled,
   handleClick,
+  className,
 }: ButtonProps) => {
   return (
     <button
@@ -24,7 +26,7 @@ const Button = ({
       onClick={handleClick}
       className={`btn ${style === 'warning' ? 'btn-accent' : 'btn-secondary'} ${
         disabled ? 'btn-disabled' : ''
-      }`}
+      } ${className || ''}`}
     >
       {children}
     </button>

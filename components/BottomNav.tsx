@@ -12,10 +12,10 @@ const BottomNav = async () => {
       <Link href={routes.home}>
         <Image src='/moon.png' alt='Logo' width={32} height={32} />
       </Link>
-      <Link href={routes.createSleep}>Create</Link>
+      <a>Create</a>
       <Link href={routes.records}>Records</Link>
       {session ? (
-        <Link href={routes.profile}>Profile</Link>
+        <a>Profile</a>
       ) : (
         <AuthButton provider='google'>Login</AuthButton>
       )}

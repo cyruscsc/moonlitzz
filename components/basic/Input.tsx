@@ -3,9 +3,9 @@
 import { ChangeEventHandler } from 'react';
 
 interface InputProps {
-  type?: 'text' | 'email' | 'datetime-local';
+  type?: 'text' | 'number' | 'email' | 'datetime-local';
   name?: string;
-  value?: string | null;
+  value?: string | number | null;
   min?: string | number;
   max?: string | number;
   placeholder?: string;

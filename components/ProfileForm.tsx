@@ -43,7 +43,6 @@ const ProfileForm = () => {
     >
       <Input
         type='email'
-        id='email'
         name='email'
         value={formData.email}
         placeholder='Email'
@@ -53,7 +52,6 @@ const ProfileForm = () => {
       />
       <Input
         type='text'
-        id='name'
         name='name'
         value={formData.name}
         placeholder='Name'

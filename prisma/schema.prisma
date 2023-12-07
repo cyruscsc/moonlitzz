@@ -44,8 +44,9 @@ model User {
 model Sleep {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  start     String // date.toISOString().slice(0, 16) (2023-12-03T21:00)
-  end       String // date.toISOString().slice(0, 16) (2023-12-03T21:00)
+  start     String // ISO (2023-12-03T21:00)
+  end       String // ISO (2023-12-03T21:00)
+  duration  Int      @default(0) // in seconds
   nightmare Boolean  @default(false)
   wakeUp    Boolean  @default(false)
   sweat     Boolean  @default(false)

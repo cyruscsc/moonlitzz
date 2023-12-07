@@ -4,8 +4,9 @@ export interface UserUpdateInput {
 
 export interface SleepCreateInput {
   userId: string;
-  start: string; // date.toISOString().slice(0, 16) (2023-12-03T21:00)
-  end: string; // date.toISOString().slice(0, 16) (2023-12-03T21:00)
+  start: string; // ISO (2023-12-03T21:00)
+  end: string; // ISO (2023-12-03T21:00)
+  duration: number; // in sec
   nightmare: boolean;
   wakeUp: boolean;
   sweat: boolean;
@@ -13,8 +14,9 @@ export interface SleepCreateInput {
 }
 
 export interface SleepUpdateInput {
-  start?: string; // date.toISOString().slice(0, 16) (2023-12-03T21:00)
-  end?: string; // date.toISOString().slice(0, 16) (2023-12-03T21:00)
+  start?: string; // ISO (2023-12-03T21:00)
+  end?: string; // ISO (2023-12-03T21:00)
+  duration?: number; // in sec
   nightmare?: boolean;
   wakeUp?: boolean;
   sweat?: boolean;

@@ -37,19 +37,9 @@ const Navbar = async () => {
             )}
             <li>
               {session ? (
-                <details>
-                  <summary>Profile</summary>
-                  <ul className='p-2 bg-base-100 rounded-t-none z-10'>
-                    <li>
-                      <ModalButton forId={elementIds.modal.profile}>
-                        Edit
-                      </ModalButton>
-                    </li>
-                    <li>
-                      <AuthButton provider='google'>Logout</AuthButton>
-                    </li>
-                  </ul>
-                </details>
+                <ModalButton forId={elementIds.modal.profile}>
+                  Profile
+                </ModalButton>
               ) : (
                 <AuthButton provider='google'>Login</AuthButton>
               )}

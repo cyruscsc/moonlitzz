@@ -16,6 +16,7 @@ const AuthButton = ({ provider, children }: AuthButtonProps) => {
       type='button'
       disabled={status === 'loading'}
       onClick={() => (session ? signOut() : signIn(provider))}
+      className='text-sm'
     >
       {children}
     </button>

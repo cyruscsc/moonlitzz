@@ -102,3 +102,8 @@ export const modalOpenHandler = (forId: string): void => {
   const dialog = document.getElementById(forId) as HTMLDialogElement;
   dialog.showModal();
 };
+
+export const modalCloseHandler = (forId: string): void => {
+  const dialog = document.getElementById(forId) as HTMLDialogElement;
+  dialog.close();
+};

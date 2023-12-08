@@ -1,10 +1,11 @@
 import { elementIds } from '@/constants';
 import { Modal } from './basic';
-import { ProfileForm } from '.';
+import { ProfileDeleteModal, ProfileForm } from '.';
 
 const ProfileModal = () => (
   <Modal id={elementIds.modal.profile} title='Profile'>
     <ProfileForm />
+    <ProfileDeleteModal />
   </Modal>
 );
 

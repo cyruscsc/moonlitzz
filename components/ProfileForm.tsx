@@ -3,9 +3,13 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Button, Form, Input, Loading } from './basic';
-import { formChangeHandler, formSubmitHandler } from '@/utils/handler';
-import { endpoints } from '@/constants';
-import { ProfileDeleteButton } from '.';
+import {
+  formChangeHandler,
+  formSubmitHandler,
+  modalOpenHandler,
+} from '@/utils/handler';
+import { elementIds, endpoints } from '@/constants';
+import { AuthButton, ProfileDeleteButton } from '.';
 
 interface ProfileFormDataProps {
   email: string;
@@ -59,11 +63,20 @@ const ProfileForm = () => {
         label='Name'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
-      <div className='flex justify-end gap-3 mt-3'>
-        <Button type='submit' disabled={loading}>
-          {loading ? <Loading /> : 'Update'}
-        </Button>
-        <ProfileDeleteButton />
+      <div className='flex justify-between gap-3 mt-3'>
+        <button
+          type='button'
+          onClick={() => modalOpenHandler(elementIds.modal.profileDelete)}
+          className='text-accent text-xs'
+        >
+          Delete account
+        </button>
+        <div className='flex justify-end gap-3'>
+          <Button type='submit' disabled={loading}>
+            {loading ? <Loading /> : 'Update'}
+          </Button>
+          <AuthButton provider='google'>Logout</AuthButton>
+        </div>
       </div>
     </Form>
   );

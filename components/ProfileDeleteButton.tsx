@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from './basic';
+import { Button, Loading } from './basic';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
@@ -49,7 +49,7 @@ const ProfileDeleteButton = () => {
       disabled={loading}
       handleClick={handleClick}
     >
-      {loading ? 'Deleting...' : 'Delete Account'}
+      {loading ? <Loading /> : 'Delete'}
     </Button>
   );
 };

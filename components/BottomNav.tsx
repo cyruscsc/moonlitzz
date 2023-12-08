@@ -1,24 +1,46 @@
-import { routes } from '@/constants';
+import { elementIds, routes } from '@/constants';
 import { authOptions } from '@/lib/next-auth';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { AuthButton } from '.';
-import Image from 'next/image';
+import { AuthButton, ModalButton } from '.';
+import {
+  MdOutlineHome,
+  MdOutlineBed,
+  MdOutlineAddBox,
+  MdOutlinePerson,
+  MdLogin,
+} from 'react-icons/md';
 
 const BottomNav = async () => {
   const session = await getServerSession(authOptions);
-  return (
-    <nav className='btm-nav md:hidden'>
+  return session ? (
+    <nav className='btm-nav md:hidden border-t border-neutral'>
       <Link href={routes.home}>
-        <Image src='/moon.png' alt='Logo' width={32} height={32} />
+        <div className='text-2xl'>
+          <MdOutlineHome />
+        </div>
       </Link>
-      <a>Create</a>
-      <Link href={routes.records}>Records</Link>
-      {session ? (
-        <a>Profile</a>
-      ) : (
-        <AuthButton provider='google'>Login</AuthButton>
-      )}
+      <ModalButton forId={elementIds.modal.create}>
+        <div className='text-2xl'>
+          <MdOutlineAddBox />
+        </div>
+      </ModalButton>
+      <Link href={routes.records}>
+        <div className='text-2xl'>
+          <MdOutlineBed />
+        </div>
+      </Link>
+      <ModalButton forId={elementIds.modal.profile}>
+        <div className='text-2xl'>
+          <MdOutlinePerson />
+        </div>
+      </ModalButton>
+    </nav>
+  ) : (
+    <nav className='btm-nav md:hidden border-t border-neutral'>
+      <AuthButton provider='google'>
+        <MdLogin />
+      </AuthButton>
     </nav>
   );
 };

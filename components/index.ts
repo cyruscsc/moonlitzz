@@ -5,6 +5,7 @@ export { default as CreateModal } from './CreateModal';
 export { default as ModalButton } from './ModalButton';
 export { default as Navbar } from './Navbar';
 export { default as ProfileDeleteButton } from './ProfileDeleteButton';
+export { default as ProfileDeleteModal } from './ProfileDeleteModal';
 export { default as ProfileForm } from './ProfileForm';
 export { default as ProfileModal } from './ProfileModal';
 export { default as SessionData } from './SessionData';

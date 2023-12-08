@@ -59,8 +59,11 @@ const ProfileForm = () => {
         type='text'
         name='name'
         value={formData.name}
+        minLength={2}
+        maxLength={40}
         placeholder='Name'
         label='Name'
+        help='Min 2 characters, max 40 characters'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
       <div className='flex justify-between gap-3 mt-3'>
@@ -72,7 +75,12 @@ const ProfileForm = () => {
           Delete account
         </button>
         <div className='flex justify-end gap-3'>
-          <Button type='submit' disabled={loading}>
+          <Button
+            type='submit'
+            disabled={
+              loading || formData.name.length < 2 || formData.name.length > 40
+            }
+          >
             {loading ? <Loading /> : 'Update'}
           </Button>
           <AuthButton provider='google'>Logout</AuthButton>

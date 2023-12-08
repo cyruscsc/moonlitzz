@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button, Checkbox, Form, Input } from './basic';
+import { Button, Checkbox, Form, Input, Loading } from './basic';
 import toast from 'react-hot-toast';
 import { formChangeHandler, formSubmitHandler } from '@/utils/handler';
 import { SleepResponseData } from '@/types/api.types';
@@ -108,7 +108,7 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
         type='datetime-local'
         name='start'
         value={formData.start}
-        max={new Date().toISOString().slice(0, 16)}
+        max={formData.end || new Date().toISOString().slice(0, 16)}
         required={true}
         label='Start'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
@@ -117,6 +117,7 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
         type='datetime-local'
         name='end'
         value={formData.end}
+        min={formData.start}
         max={new Date().toISOString().slice(0, 16)}
         required={true}
         label='End'
@@ -152,14 +153,23 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
       <Input
         type='text'
         name='note'
+        maxLength={100}
         value={formData.note}
         label='Note'
+        help='Max 100 characters'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
       <div className='flex justify-end mt-3'>
-        <Button type='submit' disabled={loading}>
-          {type === 'create' && (loading ? 'Creating' : 'Create')}
-          {type === 'edit' && (loading ? 'Updating' : 'Update')}
+        <Button
+          type='submit'
+          disabled={
+            loading ||
+            formData.duration <= 0 ||
+            (formData.note?.length as number) > 100
+          }
+        >
+          {type === 'create' && (loading ? <Loading /> : 'Create')}
+          {type === 'edit' && (loading ? <Loading /> : 'Update')}
         </Button>
       </div>
     </Form>

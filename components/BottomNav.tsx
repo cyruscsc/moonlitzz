@@ -39,7 +39,9 @@ const BottomNav = async () => {
   ) : (
     <nav className='btm-nav md:hidden border-t border-neutral'>
       <AuthButton provider='google'>
-        <MdLogin />
+        <div className='text-2xl'>
+          <MdLogin />
+        </div>
       </AuthButton>
     </nav>
   );

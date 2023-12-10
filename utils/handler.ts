@@ -8,6 +8,12 @@ interface FormChangable {
   setFormData: Dispatch<SetStateAction<any>>;
 }
 
+/**
+ * A generic form change handler for input elements that update the form data React state
+ * @param {ChangeEvent<HTMLInputElement>} e - Change event from input
+ * @param {Object} formData - Form data object
+ * @param {Dispatch<SetStateAction<any>>} setFormData - Form data React state setter
+ */
 export const formChangeHandler = ({
   e,
   formData,
@@ -41,6 +47,16 @@ interface FormSubmitable {
   };
 }
 
+/**
+ * A generic form submit handler for form elements that send a request to an API endpoint
+ * @param {FormEvent<HTMLFormElement>} e - Submit event from form
+ * @param {string} endpoint - API endpoint
+ * @param {string} method - HTTP method (optional, default: POST)
+ * @param {Object} headers - HTTP headers (optional, default: { 'Content-Type': 'application/json' })
+ * @param {Object} formData - Form data object
+ * @param {Dispatch<SetStateAction<boolean>>} setLoading - Loading state setter (optional)
+ * @param {Object} handleStatus - Object containing functions to handle different HTTP status codes (optional)
+ */
 export const formSubmitHandler = async ({
   e,
   endpoint,
@@ -98,11 +114,19 @@ export const formSubmitHandler = async ({
   setLoading && setLoading(false);
 };
 
+/**
+ * Opens a dialog element
+ * @param {string} forId - HTML id of the dialog element to open
+ */
 export const modalOpenHandler = (forId: string): void => {
   const dialog = document.getElementById(forId) as HTMLDialogElement;
   dialog.showModal();
 };
 
+/**
+ * Closes a dialog element
+ * @param {string} forId - HTML id of the dialog element to close
+ */
 export const modalCloseHandler = (forId: string): void => {
   const dialog = document.getElementById(forId) as HTMLDialogElement;
   dialog.close();

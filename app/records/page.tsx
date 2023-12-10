@@ -1,6 +1,6 @@
 'use client';
 
-import { ModalButton } from '@/components';
+import { AuthButton, ModalButton } from '@/components';
 import { Accordion } from '@/components/basic';
 import { elementIds, endpoints } from '@/constants';
 import { SleepsResponseData } from '@/types/api.types';
@@ -35,7 +35,11 @@ const Records = () => {
     }
   }, []);
 
-  return (
+  return sleeps.length === 0 ? (
+    <div>
+      <p>You have to sigin in first!</p>
+    </div>
+  ) : (
     <>
       <div>
         <h1>Records</h1>

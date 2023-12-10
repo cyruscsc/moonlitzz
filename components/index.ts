@@ -7,5 +7,8 @@ export { default as ProfileDeleteButton } from './ProfileDeleteButton';
 export { default as ProfileDeleteModal } from './ProfileDeleteModal';
 export { default as ProfileForm } from './ProfileForm';
 export { default as ProfileModal } from './ProfileModal';
+export { default as SleepAnalysis } from './SleepAnalysis';
 export { default as SleepDeleteButton } from './SleepDeleteButton';
 export { default as SleepForm } from './SleepForm';
+export { default as SleepTabContent } from './SleepTabContent';
+export { default as TimeInBedCard } from './TimeInBedCard';

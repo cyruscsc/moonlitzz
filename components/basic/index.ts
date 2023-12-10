@@ -6,3 +6,5 @@ export { default as Form } from './Form';
 export { default as Input } from './Input';
 export { default as Loading } from './Loading';
 export { default as Modal } from './Modal';
+export { default as SimpleAreaChart } from './SimpleAreaChart';
+export { default as Tabs } from './Tabs';

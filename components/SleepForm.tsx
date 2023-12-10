@@ -19,7 +19,7 @@ interface SleepFormDataProps {
   end: string; // ISO (2023-12-03T21:00)
   duration: number; // in sec
   nightmare: boolean;
-  wakeUp: boolean;
+  wakeup: boolean;
   sweat: boolean;
   note: string | null;
 }
@@ -31,7 +31,7 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
     end: '',
     duration: 0,
     nightmare: false,
-    wakeUp: false,
+    wakeup: false,
     sweat: false,
     note: '',
   } as SleepFormDataProps);
@@ -47,9 +47,9 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
     });
     const data: SleepResponseData = await res.json();
     if (data.sleep) {
-      const { start, end, duration, nightmare, wakeUp, sweat, note } =
+      const { start, end, duration, nightmare, wakeup, sweat, note } =
         data.sleep;
-      setFormData({ start, end, duration, nightmare, wakeUp, sweat, note });
+      setFormData({ start, end, duration, nightmare, wakeup, sweat, note });
     }
     setLoading(false);
   };
@@ -78,8 +78,8 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
 
   useEffect(() => {
     if (formData.start && formData.end) {
-      const startDate = TK.parseDate(formData.start).date;
-      const endDate = TK.parseDate(formData.end).date;
+      const startDate = TK.parseDate(formData.start).epoch;
+      const endDate = TK.parseDate(formData.end).epoch;
       const duration = TK.findLength(startDate, endDate).lengthInSec;
       setFormData({ ...formData, duration });
     }
@@ -139,8 +139,8 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
       <Checkbox
-        name='wakeUp'
-        checked={formData.wakeUp}
+        name='wakeup'
+        checked={formData.wakeup}
         label='Wake-up'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />

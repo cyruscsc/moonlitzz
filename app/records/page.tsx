@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthButton, ModalButton } from '@/components';
+import { ModalButton } from '@/components';
 import { Accordion } from '@/components/basic';
 import { elementIds, endpoints } from '@/constants';
 import { SleepsResponseData } from '@/types/api.types';
@@ -24,7 +24,11 @@ const Records = () => {
       });
       const data: SleepsResponseData = await res.json();
       if (data.sleeps) {
-        setSleeps(data.sleeps.toReversed());
+        setSleeps(
+          data.sleeps.sort(
+            (a, b) => TK.parseDate(b.start).epoch - TK.parseDate(a.start).epoch
+          )
+        );
       }
     };
     try {
@@ -71,7 +75,7 @@ const Records = () => {
                     }`}
                   </span>
                   <span>
-                    Wakeup:{' '}
+                    wakeup:{' '}
                     {`${TK.parseDate(sleep.end).hour}:${
                       TK.parseDate(sleep.end).minute
                     }`}
@@ -79,7 +83,7 @@ const Records = () => {
                 </div>
                 <div className='flex gap-3'>
                   <span>Nightmare: {sleep.nightmare ? 'yes' : 'no'}</span>
-                  <span>Wake-up: {sleep.wakeUp ? 'yes' : 'no'}</span>
+                  <span>Wake-up: {sleep.wakeup ? 'yes' : 'no'}</span>
                   <span>Sweat: {sleep.sweat ? 'yes' : 'no'}</span>
                 </div>
               </div>

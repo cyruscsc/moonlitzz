@@ -1,5 +1,5 @@
 export interface ParsedDate {
-  date: Date;
+  epoch: number;
   year: string;
   month: string;
   day: string;
@@ -49,7 +49,7 @@ class TimeKeeper {
   static parseDate(dateString: string): ParsedDate {
     const date = new Date(dateString);
     return {
-      date,
+      epoch: date.getTime(),
       year: `${date.getFullYear()}`,
       month: this.monthNames[date.getMonth()],
       day: this.padZero(date.getDate()),
@@ -64,8 +64,8 @@ class TimeKeeper {
    * @param {Date} to - End date
    * @returns {DateLength} Object containing length in seconds, the hour part and the minute part of the length
    */
-  static findLength(from: Date, to: Date): DateLength {
-    const lengthInSec = Math.floor((to.getTime() - from.getTime()) / 1000);
+  static findLength(from: number, to: number): DateLength {
+    const lengthInSec = Math.floor((to - from) / 1000);
     const hour = Math.floor(lengthInSec / 3600);
     const minute = Math.floor((lengthInSec % 3600) / 60);
     return {
@@ -95,13 +95,13 @@ class TimeKeeper {
   /**
    * Parses a length in seconds into a ParsedDate object
    * @param {number} lengthInSec - Length in seconds
-   * @returns {ParsedDate} Parsed date object with date object, and only its hour and minute parts
+   * @returns {ParsedDate} Parsed date object with only its hour and minute parts
    */
   static parseLength(lengthInSec: number): ParsedDate {
     const hour = Math.floor(lengthInSec / 3600);
     const minute = Math.floor((lengthInSec % 3600) / 60);
     return {
-      date: new Date(lengthInSec * 1000),
+      epoch: 0,
       year: '',
       month: '',
       day: '',

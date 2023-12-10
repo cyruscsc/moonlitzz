@@ -48,7 +48,7 @@ model Sleep {
   end       String // ISO (2023-12-03T21:00)
   duration  Int      @default(0) // in seconds
   nightmare Boolean  @default(false)
-  wakeUp    Boolean  @default(false)
+  wakeup    Boolean  @default(false)
   sweat     Boolean  @default(false)
   note      String?
   createdAt DateTime @default(now())

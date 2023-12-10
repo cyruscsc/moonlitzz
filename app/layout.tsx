@@ -18,12 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={comfortaa.className}>
+      <body className={`${comfortaa.className} h-screen`}>
         <AuthProvider>
-          <div className='max-w-5xl mx-auto'>
+          <div className='max-w-5xl mx-auto p-1 md:py-0 h-screen'>
             <ToasterProvider />
             <Navbar />
-            {children}
+            <div className='md:py-6'>{children}</div>
             <BottomNav />
           </div>
         </AuthProvider>

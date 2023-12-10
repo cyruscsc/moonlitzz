@@ -8,7 +8,7 @@ export interface SleepCreateInput {
   end: string; // ISO (2023-12-03T21:00)
   duration: number; // in sec
   nightmare: boolean;
-  wakeUp: boolean;
+  wakeup: boolean;
   sweat: boolean;
   notes?: string;
 }
@@ -18,7 +18,7 @@ export interface SleepUpdateInput {
   end?: string; // ISO (2023-12-03T21:00)
   duration?: number; // in sec
   nightmare?: boolean;
-  wakeUp?: boolean;
+  wakeup?: boolean;
   sweat?: boolean;
   note?: string;
 }

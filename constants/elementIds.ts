@@ -4,6 +4,7 @@ const elementIds = {
     profileDelete: 'profile-delete-modal',
     create: 'create-modal',
     edit: 'edit-modal',
+    delete: 'delete-modal',
   },
 };
 

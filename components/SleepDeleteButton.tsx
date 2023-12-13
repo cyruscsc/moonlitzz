@@ -1,20 +1,21 @@
 'use client';
 
 import { Dispatch, useState } from 'react';
-import { Button } from './basic';
-import { endpoints } from '@/constants';
+import { Button, Loading } from './basic';
+import { elementIds, endpoints } from '@/constants';
 import toast from 'react-hot-toast';
 import { SleepResponseData } from '@/types/api.types';
 import { Sleep } from '@prisma/client';
+import { modalCloseHandler } from '@/utils/handler';
 
-interface SleepDeleteButtonProps {
-  id: string;
+export interface SleepDeleteButtonProps {
+  sleepId: string;
   sleeps: Sleep[];
   setSleeps: Dispatch<React.SetStateAction<Sleep[]>>;
 }
 
 const SleepDeleteButton = ({
-  id,
+  sleepId,
   sleeps,
   setSleeps,
 }: SleepDeleteButtonProps) => {
@@ -23,13 +24,13 @@ const SleepDeleteButton = ({
   const handleClick = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${endpoints.sleep.delete}/${id}`, {
+      const res = await fetch(`${endpoints.sleep.delete}/${sleepId}`, {
         method: 'DELETE',
       });
       const data: SleepResponseData = await res.json();
       switch (data.status) {
         case 200:
-          setSleeps(sleeps.filter((sleep) => sleep.id !== id));
+          setSleeps(sleeps.filter((sleep) => sleep.id !== sleepId));
           data.message && toast.success(data.message);
           break;
         case 400:
@@ -52,11 +53,17 @@ const SleepDeleteButton = ({
       toast.error('Something went wrong!');
     }
     setLoading(false);
+    modalCloseHandler(elementIds.modal.delete);
   };
 
   return (
-    <Button type='button' disabled={loading} handleClick={handleClick}>
-      {loading ? 'Deleting' : 'Delete'}
+    <Button
+      type='button'
+      style='warning'
+      disabled={loading}
+      handleClick={handleClick}
+    >
+      {loading ? <Loading /> : 'Delete'}
     </Button>
   );
 };

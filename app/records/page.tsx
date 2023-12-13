@@ -1,7 +1,7 @@
 'use client';
 
-import { ModalButton } from '@/components';
-import { Accordion } from '@/components/basic';
+import { SleepDeleteModal } from '@/components';
+import { Accordion, Button } from '@/components/basic';
 import { elementIds, endpoints } from '@/constants';
 import { SleepsResponseData } from '@/types/api.types';
 import { Sleep } from '@prisma/client';
@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import TK from '@/utils/timekeeper';
 import EditModal from '@/components/EditModal';
+import { modalOpenHandler } from '@/utils/handler';
 
 const Records = () => {
   const [sleeps, setSleeps] = useState([] as Sleep[]);
@@ -41,7 +42,7 @@ const Records = () => {
 
   return sleeps.length === 0 ? (
     <div>
-      <p>You have to sigin in first!</p>
+      <p>Create your first sleep!</p>
     </div>
   ) : (
     <>
@@ -87,12 +88,31 @@ const Records = () => {
                   <span>Sweat: {sleep.sweat ? 'yes' : 'no'}</span>
                 </div>
               </div>
-              <ModalButton forId={elementIds.modal.edit}>Edit</ModalButton>
+              <div className='flex gap-3'>
+                <Button
+                  type='button'
+                  handleClick={() => modalOpenHandler(elementIds.modal.edit)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  type='button'
+                  style='warning'
+                  handleClick={() => modalOpenHandler(elementIds.modal.delete)}
+                >
+                  Delete
+                </Button>
+              </div>
             </Accordion>
           ))}
         </div>
       </div>
       <EditModal sleepId={selectedSleep} />
+      <SleepDeleteModal
+        sleepId={selectedSleep}
+        sleeps={sleeps}
+        setSleeps={setSleeps}
+      />
     </>
   );
 };

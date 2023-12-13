@@ -6,10 +6,11 @@ import { Button, Form, Input, Loading } from './basic';
 import {
   formChangeHandler,
   formSubmitHandler,
+  modalCloseHandler,
   modalOpenHandler,
 } from '@/utils/handler';
 import { elementIds, endpoints } from '@/constants';
-import { AuthButton, ProfileDeleteButton } from '.';
+import { AuthButton } from '.';
 
 interface ProfileFormDataProps {
   email: string;
@@ -33,7 +34,7 @@ const ProfileForm = () => {
 
   return (
     <Form
-      handleSubmit={(e) =>
+      handleSubmit={(e) => {
         formSubmitHandler({
           e,
           endpoint: endpoints.user.update,
@@ -43,8 +44,9 @@ const ProfileForm = () => {
           handleStatus: {
             200: () => update({ name: formData.name }),
           },
-        })
-      }
+        });
+        modalCloseHandler(elementIds.modal.profile);
+      }}
     >
       <Input
         type='email'

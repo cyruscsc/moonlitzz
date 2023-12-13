@@ -3,9 +3,13 @@
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input, Loading } from './basic';
 import toast from 'react-hot-toast';
-import { formChangeHandler, formSubmitHandler } from '@/utils/handler';
+import {
+  formChangeHandler,
+  formSubmitHandler,
+  modalCloseHandler,
+} from '@/utils/handler';
 import { SleepResponseData } from '@/types/api.types';
-import { endpoints, routes } from '@/constants';
+import { elementIds, endpoints, routes } from '@/constants';
 import { useRouter } from 'next/navigation';
 import TK from '@/utils/timekeeper';
 
@@ -87,7 +91,7 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
 
   return (
     <Form
-      handleSubmit={(e) =>
+      handleSubmit={(e) => {
         formSubmitHandler({
           e,
           endpoint:
@@ -101,8 +105,9 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
             200: () => router.push(routes.records),
             201: () => router.push(routes.records),
           },
-        })
-      }
+        });
+        modalCloseHandler(elementIds.modal.create);
+      }}
     >
       <Input
         type='datetime-local'

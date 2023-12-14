@@ -12,7 +12,7 @@ const SleepAnalysis = () => {
 
   useEffect(() => {
     const getSleeps = async () => {
-      const res = await fetch(endpoints.sleep.getAll, {
+      const res = await fetch(`${endpoints.sleep.getAll}?take=30`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -16,8 +16,20 @@ export const updateUser = (id: string, data: UserUpdateInput) =>
 
 export const deleteUser = (id: string) => prisma.user.delete({ where: { id } });
 
-export const getSleeps = (userId: string) =>
-  prisma.sleep.findMany({ where: { userId } });
+export const getSleeps = (
+  userId: string,
+  skip: number,
+  take: number,
+  order: 'asc' | 'desc'
+) =>
+  prisma.sleep.findMany({
+    skip,
+    take,
+    where: { userId },
+    orderBy: {
+      start: order,
+    },
+  });
 
 export const getSleep = (id: string) =>
   prisma.sleep.findUnique({ where: { id } });

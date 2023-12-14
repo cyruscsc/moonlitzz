@@ -1,3 +1,4 @@
+import { endpoints } from '@/constants';
 import { createSleep, getSleeps } from '@/lib/action';
 import { authOptions } from '@/lib/next-auth';
 import { SessionUser } from '@/types/auth.types';
@@ -8,6 +9,15 @@ import { NextRequest, NextResponse } from 'next/server';
 // Get all sleep records
 export async function GET(req: NextRequest) {
   try {
+    const skip =
+      parseInt(req.nextUrl.searchParams.get('skip') as string) ||
+      endpoints.options.skip;
+    const take =
+      parseInt(req.nextUrl.searchParams.get('take') as string) ||
+      endpoints.options.take;
+    const order =
+      (req.nextUrl.searchParams.get('order') as 'asc' | 'desc') ||
+      endpoints.options.order;
     const session: (Session & { user: SessionUser }) | null =
       await getServerSession({ req, ...authOptions });
     if (!session) {
@@ -16,7 +26,7 @@ export async function GET(req: NextRequest) {
         error: 'You have to sign in first!',
       });
     }
-    const sleeps = await getSleeps(session.user.id);
+    const sleeps = await getSleeps(session.user.id, skip, take, order);
     if (!sleeps) {
       return NextResponse.json({ status: 404, error: 'No sleep records!' });
     }

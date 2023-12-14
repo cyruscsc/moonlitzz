@@ -14,31 +14,45 @@ import { modalOpenHandler } from '@/utils/handler';
 const Records = () => {
   const [sleeps, setSleeps] = useState([] as Sleep[]);
   const [selectedSleep, setSelectedSleep] = useState('');
+  const [moreToShow, setMoreToShow] = useState(false);
 
   useEffect(() => {
-    const getSleeps = async () => {
-      const res = await fetch(endpoints.sleep.getAll, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data: SleepsResponseData = await res.json();
-      if (data.sleeps) {
-        setSleeps(
-          data.sleeps.sort(
-            (a, b) => TK.parseDate(b.start).epoch - TK.parseDate(a.start).epoch
-          )
-        );
-      }
-    };
     try {
-      getSleeps();
+      getSleeps(0);
     } catch (error) {
       console.log(error);
       toast.error('Cannot get sleeps data!');
     }
   }, []);
+
+  const getSleeps = async (skip: number) => {
+    const res = await fetch(
+      `${endpoints.sleep.getAll}?skip=${skip}&order=desc`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const data: SleepsResponseData = await res.json();
+    if (!data.sleeps) return;
+    setSleeps([...sleeps, ...data.sleeps]);
+    if (data.sleeps.length >= endpoints.options.take) {
+      setMoreToShow(true);
+    } else {
+      setMoreToShow(false);
+    }
+  };
+
+  const handleShowMore = () => {
+    try {
+      getSleeps(sleeps.length);
+    } catch (error) {
+      console.log(error);
+      toast.error('Cannot get sleeps data!');
+    }
+  };
 
   return sleeps.length === 0 ? (
     <div>
@@ -105,6 +119,15 @@ const Records = () => {
               </div>
             </Accordion>
           ))}
+        </div>
+        <div className='flex justify-center'>
+          {moreToShow ? (
+            <Button type='button' handleClick={handleShowMore}>
+              Show more
+            </Button>
+          ) : (
+            <p>You've reached the bottom!</p>
+          )}
         </div>
       </div>
       <EditModal sleepId={selectedSleep} />

@@ -6,12 +6,15 @@ import { Sleep } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { TimeInBedCard } from '.';
+import { Loading } from './basic';
 
 const SleepAnalysis = () => {
   const [sleeps, setSleeps] = useState([] as Sleep[]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getSleeps = async () => {
+      setLoading(true);
       const res = await fetch(`${endpoints.sleep.getAll}?take=30`, {
         method: 'GET',
         headers: {
@@ -22,6 +25,7 @@ const SleepAnalysis = () => {
       if (data.sleeps) {
         setSleeps(data.sleeps);
       }
+      setLoading(false);
     };
     try {
       getSleeps();
@@ -30,12 +34,18 @@ const SleepAnalysis = () => {
       toast.error('Cannot get sleeps data!');
     }
   }, []);
-  return sleeps.length === 0 ? (
-    <div>
-      <p>Create your first sleep!</p>
-    </div>
-  ) : (
-    <TimeInBedCard sleeps={sleeps} />
+  return (
+    <>
+      {loading && <Loading />}
+      {!loading &&
+        (sleeps.length === 0 ? (
+          <div>
+            <p>Create your first sleep!</p>
+          </div>
+        ) : (
+          <TimeInBedCard sleeps={sleeps} />
+        ))}
+    </>
   );
 };
 

@@ -24,7 +24,7 @@ const Button = ({
       type={type || 'button'}
       disabled={disabled || false}
       onClick={handleClick}
-      className={`btn ${style === 'warning' ? 'btn-accent' : 'btn-secondary'} ${
+      className={`btn ${style === 'warning' ? 'btn-error' : 'btn-secondary'} ${
         disabled ? 'btn-disabled' : ''
       } ${className || ''}`}
     >

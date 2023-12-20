@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply text-sm md:text-base;
+}
+
+.event-list span:not(:first-child) {
+  @apply lowercase before:content-[',_'];
+}

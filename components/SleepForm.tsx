@@ -106,7 +106,9 @@ const SleepForm = ({ type, sleepId }: SleepFormProps) => {
             201: () => router.push(routes.records),
           },
         });
-        modalCloseHandler(elementIds.modal.create);
+        modalCloseHandler(
+          type === 'create' ? elementIds.modal.create : elementIds.modal.edit
+        );
       }}
     >
       <Input

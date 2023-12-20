@@ -10,14 +10,30 @@ const Navbar = async () => {
 
   return (
     <>
-      <nav className='hidden md:navbar bg-base-100'>
+      <nav className='navbar sticky top-0 bg-base-100 z-50'>
         <div className='flex-1'>
           <Link href={routes.home}>
-            <Image src='/moon.png' alt='Logo' width={48} height={48} />
+            <Image
+              src='/moon.png'
+              alt='Logo'
+              width={32}
+              height={32}
+              className='block md:hidden'
+            />
+            <Image
+              src='/moon.png'
+              alt='Logo'
+              width={48}
+              height={48}
+              className='hidden md:block'
+            />
           </Link>
         </div>
         <div className='flex-none'>
-          <ul className='menu menu-horizontal px-1'>
+          <p className='md:hidden text-sm'>
+            Hi {session ? session.user?.name : 'there'}, did you sleep well?
+          </p>
+          <ul className='hidden md:menu md:menu-horizontal px-1'>
             {session && (
               <li>
                 <details>

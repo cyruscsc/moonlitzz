@@ -62,17 +62,17 @@ const ProfileForm = () => {
         name='name'
         value={formData.name}
         minLength={2}
-        maxLength={40}
+        maxLength={10}
         placeholder='Name'
         label='Name'
-        help='Min 2 characters, max 40 characters'
+        help='Min 2 characters, max 10 characters'
         handleChange={(e) => formChangeHandler({ e, formData, setFormData })}
       />
       <div className='flex justify-between gap-3 mt-3'>
         <button
           type='button'
           onClick={() => modalOpenHandler(elementIds.modal.profileDelete)}
-          className='text-accent text-xs'
+          className='text-error text-xs'
         >
           Delete account
         </button>

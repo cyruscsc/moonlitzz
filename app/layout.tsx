@@ -20,10 +20,10 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${comfortaa.className} h-screen`}>
         <AuthProvider>
-          <div className='max-w-5xl mx-auto p-1 md:py-0 h-screen'>
+          <div className='max-w-5xl mx-auto px-1 h-screen'>
             <ToasterProvider />
             <Navbar />
-            <div className='md:py-6'>{children}</div>
+            <div className='pb-16 md:py-6'>{children}</div>
             <BottomNav />
           </div>
         </AuthProvider>

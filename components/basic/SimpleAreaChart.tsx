@@ -25,8 +25,8 @@ const SimpleAreaChart = ({ data, dataKey }: AreaChartProps) => {
         data={data}
         margin={{
           top: 10,
-          right: 30,
-          left: 0,
+          right: 0,
+          left: -40,
           bottom: 0,
         }}
       >
